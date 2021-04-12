@@ -1,10 +1,23 @@
-import React from 'react';
-import { Form, Input, Button, Row, Col } from 'antd';
+import React, { useContext } from 'react';
+import { Form, Input, Button, Row, Col, message } from 'antd';
 import styles from './LoginForm.module.scss';
+import { Context } from 'App.js';
+import verifyUser from 'utils/verifyUser';
+import generateToken from 'utils/tokenGenerator';
 
 const LoginForm = () => {
-  const onFinish = (values) => {
-    console.log('True:', values);
+  const { setAuth } = useContext(Context);
+
+  const onFinish = ({ login, password }) => {
+    if (verifyUser(login, password)) {
+      const token = generateToken();
+      localStorage.setItem('token', JSON.stringify(token));
+      setAuth(token);
+      message.success('Logged in successfully');
+      return;
+    }
+
+    message.error('Auth error: invalid credentials');
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -21,11 +34,11 @@ const LoginForm = () => {
         onFinishFailed={onFinishFailed}
       >
         <Form.Item name={'login'} label='Логин' className={styles.label}>
-          <Input disabled={false} className={styles.labelTest} />
+          <Input disabled={false} />
         </Form.Item>
 
         <Form.Item name={'password'} label='Пароль' className={styles.label}>
-          <Input.Password disabled={false} className={styles.labelTest} />
+          <Input.Password disabled={false} />
         </Form.Item>
 
         <Row justify='center'>

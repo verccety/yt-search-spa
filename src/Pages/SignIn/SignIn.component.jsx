@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './SignIn.module.scss';
-import { Row, Col, Button, Layout, Typography } from 'antd';
+import { Row, Col, Typography } from 'antd';
 import logo from 'assets/logo.svg';
-import LoginForm from 'Components/LoginForm/LoginForm.component'
+import LoginForm from 'components/LoginForm/LoginForm.component';
 
 const SignIn = () => {
   const { Title } = Typography;
@@ -11,22 +11,23 @@ const SignIn = () => {
     <>
       <Row className={styles.mainContainer} align='middle' justify='center'>
         <Col className={styles.loginContainer}>
-
-          <Row className={styles.logoContainer} >
+          <Row className={styles.logoContainer}>
             <Col>
               <img src={logo} alt='Logo' />
             </Col>
           </Row>
-          
-          <Row >
+
+          <Row>
             <Col>
-              <Title level={3} className={styles.header}>Вход</Title>
+              <Title level={3} className={styles.header}>
+                Вход
+              </Title>
             </Col>
           </Row>
 
-          <Row >
+          <Row>
             <Col>
-<LoginForm/>
+              <LoginForm />
             </Col>
           </Row>
         </Col>
