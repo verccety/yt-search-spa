@@ -1,0 +1,22 @@
+.mainContainer {
+  min-height: 100vh;
+  background-color: #fafafa;
+}
+
+.loginContainer {
+  background-color: #fff;
+  border: 1px solid rgba(39, 39, 39, 0.1);
+  padding: 3rem 1rem;
+  width: 55rem;
+  display: grid;
+  place-content: center;
+  place-items: center;
+}
+
+.logoContainer {
+  margin-bottom: 4rem;
+}
+
+.header {
+  font-weight: 500;
+}
