@@ -1,7 +1,10 @@
-import React, { useState, createContext } from 'react';
-import { Redirect, Route } from 'react-router-dom';
-import './App.css';
+import PrivateRoute from 'components/PrivateRoute/PrivateRoute.component';
+import SearchPage from 'pages/Search/Search.component';
 import SignIn from 'pages/SignIn/SignIn.component';
+import React, { createContext, useState } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import './App.css';
+
 
 export const Context = createContext();
 
@@ -14,11 +17,17 @@ function App() {
   return (
     <Context.Provider value={{ auth, setAuth }}>
       <div className='App'>
-        <Route exact path='/sign-in'>
-          {auth ? <Redirect to='/search' /> : <SignIn />}
-        </Route>
+        <Switch>
+          <Route exact path='/sign-in'>
+            {auth ? <Redirect to='/search' /> : <SignIn />}
+          </Route>
 
-        <Route path='/'>{auth ? <Redirect to='/search' /> : <Redirect to='/sign-in' />}</Route>
+          <PrivateRoute exact path='/search'>
+            <SearchPage />
+          </PrivateRoute>
+
+          <Route path='/'>{auth ? <Redirect to='/search' /> : <Redirect to='/sign-in' />}</Route>
+        </Switch>
       </div>
     </Context.Provider>
   );

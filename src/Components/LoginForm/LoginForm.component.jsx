@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
-import { Form, Input, Button, Row, Col, message } from 'antd';
-import styles from './LoginForm.module.scss';
+import { Button, Col, Form, Input, message, Row } from 'antd';
 import { Context } from 'App.js';
-import verifyUser from 'utils/verifyUser';
+import React, { useContext } from 'react';
 import generateToken from 'utils/tokenGenerator';
+import verifyUser from 'utils/verifyUser';
+import styles from './LoginForm.module.scss';
 
 const LoginForm = () => {
   const { setAuth } = useContext(Context);
@@ -33,11 +33,31 @@ const LoginForm = () => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <Form.Item name={'login'} label='Логин' className={styles.label}>
+        <Form.Item
+          name={'login'}
+          label='Логин'
+          className={styles.label}
+          rules={[
+            {
+              required: true,
+              message: 'Введите имя пользователя',
+            },
+          ]}
+        >
           <Input disabled={false} />
         </Form.Item>
 
-        <Form.Item name={'password'} label='Пароль' className={styles.label}>
+        <Form.Item
+          name={'password'}
+          label='Пароль'
+          className={styles.label}
+          rules={[
+            {
+              required: true,
+              message: 'Введите пароль',
+            },
+          ]}
+        >
           <Input.Password disabled={false} />
         </Form.Item>
 
