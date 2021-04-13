@@ -1,13 +1,16 @@
 import MenuLayout from 'components/MenuLayout/MenuLayout.component';
 import SearchInput from 'components/SearchInput/SearchInput.component';
+import VideosOverview from 'components/VideosOverview/VideosOverview.component';
 import React from 'react';
 import { Container, SearchContainer, Title } from './Search.styles';
 
 const SearchPage = () => {
-  const searchQuery = null;
+  const searchQuery = true;
 
   return searchQuery ? (
-    <div />
+    <MenuLayout>
+      <VideosOverview />
+    </MenuLayout>
   ) : (
     <MenuLayout>
       <Container>

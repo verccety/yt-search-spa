@@ -16,5 +16,7 @@ export const SearchContainer = styled(Row)`
 
 export const Title = styled.h1`
   font-size: 36px;
+  font-weight: 400;
+  line-height: 52px;
   margin-bottom: 4rem;
 `;

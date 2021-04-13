@@ -1,4 +1,4 @@
-import { Col, Row, Typography } from 'antd';
+import { Col, Row } from 'antd';
 import logo from 'assets/logo.svg';
 import LoginForm from 'components/LoginForm/LoginForm.component';
 import React from 'react';
