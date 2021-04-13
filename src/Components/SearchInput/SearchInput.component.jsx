@@ -1,12 +1,8 @@
-import { Input } from 'antd';
-import styles from './SearchInput.module.scss';
+import { StyledSearch } from './SearchInput.styles';
 
 const SearchInput = ({ ...props }) => {
-  const { Search } = Input;
-
-
   return (
-    <Search className={styles.searchInput}
+    <StyledSearch
       placeholder='Что хотите посмотреть?'
       enterButton='Найти'
       size='large'

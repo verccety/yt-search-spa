@@ -1,17 +1,12 @@
 import { Layout } from 'antd';
 import Header from 'components/Header/Header.component';
-import styles from './MenuLayout.module.scss';
+import { StyledContent } from './MenuLayout.styles';
 
-
-const MenuLayout = ({children}) => {
-  const { Content } = Layout;
-
+const MenuLayout = ({ children }) => {
   return (
     <Layout>
       <Header />
-      <Content className={styles.content}>
-        {children}
-      </Content>
+      <StyledContent>{children}</StyledContent>
     </Layout>
   );
 };

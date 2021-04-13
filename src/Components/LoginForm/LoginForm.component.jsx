@@ -1,9 +1,9 @@
-import { Button, Col, Form, Input, message, Row } from 'antd';
+import { Col, Form, Input, message, Row } from 'antd';
 import { Context } from 'App.js';
 import React, { useContext } from 'react';
 import generateToken from 'utils/tokenGenerator';
 import verifyUser from 'utils/verifyUser';
-import styles from './LoginForm.module.scss';
+import { LoginButton, StyledFormItem } from './LoginForm.styles';
 
 const LoginForm = () => {
   const { setAuth } = useContext(Context);
@@ -13,11 +13,11 @@ const LoginForm = () => {
       const token = generateToken();
       localStorage.setItem('token', JSON.stringify(token));
       setAuth(token);
-      message.success('Logged in successfully');
+      message.success('Вход выполнен успешно');
       return;
     }
 
-    message.error('Auth error: invalid credentials');
+    message.error('Ошибка авторизации: неверные данные');
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -33,10 +33,9 @@ const LoginForm = () => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <Form.Item
+        <StyledFormItem
           name={'login'}
           label='Логин'
-          className={styles.label}
           rules={[
             {
               required: true,
@@ -45,12 +44,11 @@ const LoginForm = () => {
           ]}
         >
           <Input disabled={false} />
-        </Form.Item>
+        </StyledFormItem>
 
-        <Form.Item
+        <StyledFormItem
           name={'password'}
           label='Пароль'
-          className={styles.label}
           rules={[
             {
               required: true,
@@ -59,19 +57,14 @@ const LoginForm = () => {
           ]}
         >
           <Input.Password disabled={false} />
-        </Form.Item>
+        </StyledFormItem>
 
         <Row justify='center'>
           <Col>
             <Form.Item>
-              <Button
-                loading={false}
-                type='primary'
-                htmlType='submit'
-                className={styles.buttonLogin}
-              >
+              <LoginButton loading={false} type='primary' htmlType='submit'>
                 Войти
-              </Button>
+              </LoginButton>
             </Form.Item>
           </Col>
         </Row>

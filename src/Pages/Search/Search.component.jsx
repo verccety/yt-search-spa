@@ -1,7 +1,7 @@
-import { Row } from 'antd';
+import MenuLayout from 'components/MenuLayout/MenuLayout.component';
 import SearchInput from 'components/SearchInput/SearchInput.component';
 import React from 'react';
-import styles from './Search.module.scss';
+import { Container, SearchContainer, Title } from './Search.styles';
 
 const SearchPage = () => {
   const searchQuery = null;
@@ -9,12 +9,14 @@ const SearchPage = () => {
   return searchQuery ? (
     <div />
   ) : (
-    <Row className={styles.container}>
-      <Row justify='center' className={styles.searchContainer}>
-        <h1>Поиск видео</h1>
-        <SearchInput />
-      </Row>
-    </Row>
+    <MenuLayout>
+      <Container>
+        <SearchContainer justify='center'>
+          <Title>Поиск видео</Title>
+          <SearchInput />
+        </SearchContainer>
+      </Container>
+    </MenuLayout>
   );
 };
 

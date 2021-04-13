@@ -4,14 +4,10 @@
   font-family: 'Roboto', sans-serif;
 }
 
-h3.ant-typography {
-  font-family: Roboto;
-  font-size: 1.8rem;
-  font-style: normal;
-  font-weight: 500;
-  color: #000;
-}
-
 .ant-col .ant-form-item-label {
   padding: 0;
+}
+
+.ant-input-search-button {
+  width: 15rem;
 }

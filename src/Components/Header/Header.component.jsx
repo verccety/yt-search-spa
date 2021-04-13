@@ -1,10 +1,9 @@
-import { Layout, Menu, Row } from 'antd';
+import { Menu } from 'antd';
 import logo from 'assets/logo.svg';
 import SignoutButton from 'components/SignoutButton/SignoutButton.component';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import styles from './Header.module.scss';
-
+import { Container, Logo, StyledHeader, StyledMenu } from './Header.styles';
 
 const items = [
   { key: '1', label: 'Поиск', path: '/search' },
@@ -12,7 +11,6 @@ const items = [
 ];
 
 const Header = () => {
-  const { Header } = Layout;
   const history = useHistory();
   const location = useLocation();
   const [selectedKey, setSelectedKey] = useState(
@@ -29,23 +27,17 @@ const Header = () => {
   }, [location]);
 
   return (
-    <Header className={styles.header}>
-      <Row className={styles.container} align='middle'>
-        <img src={logo} className={styles.logo} alt='' />{' '}
-        <Menu
-          mode={'horizontal'}
-          selectedKeys={[selectedKey]}
-          className={styles.menu}
-          onClick={onClickMenu}>
-
+    <StyledHeader>
+      <Container align='middle'>
+        <Logo src={logo} alt='Лого' />
+        <StyledMenu mode={'horizontal'} selectedKeys={[selectedKey]} onClick={onClickMenu}>
           {items.map((item) => (
             <Menu.Item key={item.key}>{item.label}</Menu.Item>
           ))}
-          
-        </Menu>
+        </StyledMenu>
         <SignoutButton />
-      </Row>
-    </Header>
+      </Container>
+    </StyledHeader>
   );
 };
 
