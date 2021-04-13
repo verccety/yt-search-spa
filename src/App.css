@@ -11,3 +11,7 @@
 .ant-input-search-button {
   width: 15rem;
 }
+
+html {
+  overflow-y: scroll;
+}

@@ -1,5 +1,6 @@
 import { Row, Typography } from 'antd';
 import { DescriptionContainer, ImgContainer, StyledTitle, VideoCell } from './VideoItem.styles';
+import formatViewCount from 'utils/formatViewCount';
 
 const VideoItem = ({ channelName, videoName, videoCount, videoThumbnail, viewMode }) => {
   const { Text } = Typography;
@@ -12,7 +13,7 @@ const VideoItem = ({ channelName, videoName, videoCount, videoThumbnail, viewMod
           <StyledTitle> {videoName}</StyledTitle>
         </Row>
         <Text type='secondary'>{channelName}</Text>
-        <Text type='secondary'>333 просмотра ТЕСТ!!!</Text>
+        <Text type='secondary'>{formatViewCount(videoCount)}</Text>
       </DescriptionContainer>
     </VideoCell>
   );

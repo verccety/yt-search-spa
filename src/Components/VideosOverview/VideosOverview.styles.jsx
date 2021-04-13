@@ -2,7 +2,10 @@ import styled from 'styled-components/macro';
 import { Col } from 'antd';
 import { AppstoreOutlined, BarsOutlined, HeartOutlined } from '@ant-design/icons';
 
-export const Container = styled(Col)`
+export const Container = styled(Col).attrs((props) => ({
+  span: 24,
+  justify: 'center',
+}))`
   display: grid;
   grid-template-columns: 100%;
   padding: 0 5rem;

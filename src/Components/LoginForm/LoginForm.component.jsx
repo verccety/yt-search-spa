@@ -4,15 +4,19 @@ import React, { useContext } from 'react';
 import generateToken from 'utils/tokenGenerator';
 import verifyUser from 'utils/verifyUser';
 import { LoginButton, StyledFormItem } from './LoginForm.styles';
+import { useDispatch } from 'react-redux';
+import { setCurrentUser } from 'redux/user/userSlice';
 
 const LoginForm = () => {
   const { setAuth } = useContext(Context);
+  const dispatch = useDispatch();
 
   const onFinish = ({ login, password }) => {
     if (verifyUser(login, password)) {
       const token = generateToken();
       localStorage.setItem('token', JSON.stringify(token));
       setAuth(token);
+      dispatch(setCurrentUser(login));
       message.success('Вход выполнен успешно');
       return;
     }

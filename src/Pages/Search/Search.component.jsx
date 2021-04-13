@@ -1,25 +1,22 @@
-import MenuLayout from 'components/MenuLayout/MenuLayout.component';
 import SearchInput from 'components/SearchInput/SearchInput.component';
 import VideosOverview from 'components/VideosOverview/VideosOverview.component';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { selectSearchQuery } from 'redux/search/searchSlice';
 import { Container, SearchContainer, Title } from './Search.styles';
 
 const SearchPage = () => {
-  const searchQuery = true;
+  const searchQuery = useSelector(selectSearchQuery);
 
   return searchQuery ? (
-    <MenuLayout>
-      <VideosOverview />
-    </MenuLayout>
+    <VideosOverview />
   ) : (
-    <MenuLayout>
-      <Container>
-        <SearchContainer justify='center'>
-          <Title>Поиск видео</Title>
-          <SearchInput />
-        </SearchContainer>
-      </Container>
-    </MenuLayout>
+    <Container>
+      <SearchContainer justify='center'>
+        <Title>Поиск видео</Title>
+        <SearchInput />
+      </SearchContainer>
+    </Container>
   );
 };
 

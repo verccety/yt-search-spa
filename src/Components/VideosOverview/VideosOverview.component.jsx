@@ -1,9 +1,8 @@
 import { Col, Row, Typography } from 'antd';
 import SearchInput from 'components/SearchInput/SearchInput.component';
 import VideoItem from 'components/VideoItem/VideoItem.component';
+import React, { useEffect, useState } from 'react';
 import { fetchData } from 'utils/fetchData';
-
-import { useState, useEffect } from 'react';
 import {
   Container,
   FavoriteIcon,
@@ -23,10 +22,13 @@ const VideosOverview = () => {
   useEffect(() => {
     fetchData().then((res) => setFetchedVideos(res));
     // ? изменить потом dependency array
+    return () => {
+      console.log('******************* UNMOUNTED');
+    };
   }, []);
   return (
     <Row>
-      <Container span={24} justify='center'>
+      <Container>
         <Row>
           <Col span={24}>
             <h1>Поиск видео</h1>
