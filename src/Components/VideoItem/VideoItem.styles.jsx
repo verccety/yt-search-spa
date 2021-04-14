@@ -23,8 +23,7 @@ export const VideoCell = styled(Row)`
 
   &:hover {
     transform: scale(1.01);
-    box-shadow: 6px -3px 14px 3px rgba(24, 144, 255, 0.25),
-      -6px 3px 14px 3px rgba(24, 144, 255, 0.25);
+    box-shadow: 0px 10px 50px rgba(19, 144, 229, 0.2), 0px 10px 50px rgba(19, 144, 229, 0.2);
   }
 
   ${getCellStyle}

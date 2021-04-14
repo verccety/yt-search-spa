@@ -4,19 +4,24 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectSearchQuery } from 'redux/search/searchSlice';
 import { Container, SearchContainer, Title } from './Search.styles';
+import MenuLayout from 'components/MenuLayout/MenuLayout.component';
 
 const SearchPage = () => {
   const searchQuery = useSelector(selectSearchQuery);
 
   return searchQuery ? (
-    <VideosOverview />
+    <MenuLayout>
+      <VideosOverview />
+    </MenuLayout>
   ) : (
-    <Container>
-      <SearchContainer justify='center'>
-        <Title>Поиск видео</Title>
-        <SearchInput />
-      </SearchContainer>
-    </Container>
+    <MenuLayout>
+      <Container>
+        <SearchContainer>
+          <Title>Поиск видео</Title>
+          <SearchInput />
+        </SearchContainer>
+      </Container>
+    </MenuLayout>
   );
 };
 

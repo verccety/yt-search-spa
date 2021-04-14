@@ -2,6 +2,10 @@ import { Col, Row, Typography } from 'antd';
 import SearchInput from 'components/SearchInput/SearchInput.component';
 import VideoItem from 'components/VideoItem/VideoItem.component';
 import React, { useEffect, useState } from 'react';
+import FavoritesModal from 'components/FavoritesModal/FavoritesModal.component';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectSearchQuery } from 'redux/search/searchSlice';
+import { setIsModalVisible } from 'redux/modal/modalSlice';
 import { fetchData } from 'utils/fetchData';
 import {
   Container,
@@ -13,7 +17,9 @@ import {
 } from './VideosOverview.styles';
 
 const VideosOverview = () => {
+  const dispatch = useDispatch();
   const { Text } = Typography;
+  const searchQuery = useSelector(selectSearchQuery);
 
   const [fetchedVideos, setFetchedVideos] = useState(null);
   // possible values: 'vertical | grid'
@@ -35,13 +41,13 @@ const VideosOverview = () => {
           </Col>
         </Row>
         <InputContainer>
-          <SearchInput suffix={<FavoriteIcon />} />
+          <SearchInput suffix={<FavoriteIcon onClick={() => dispatch(setIsModalVisible())} />} />
         </InputContainer>
 
         <Row style={{ marginBottom: '2rem' }}>
           <Col span={12}>
             <Text>
-              Видео по запросу <Text strong>TEST STRING!!!</Text> |{' '}
+              Видео по запросу <Text strong>{searchQuery}</Text> |{' '}
               <Text type='secondary'>{fetchedVideos?.pageInfo?.totalResults ?? ''}</Text>
             </Text>
           </Col>
@@ -67,6 +73,7 @@ const VideosOverview = () => {
             ))}
         </Row>
       </Container>
+      <FavoritesModal />
     </Row>
   );
 };

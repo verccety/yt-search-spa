@@ -1,20 +1,23 @@
-import { Col, Row, Typography } from 'antd';
+import { Col, Row } from 'antd';
 import React from 'react';
 import { Container } from './Favorites.styles';
 import FavoritesOverview from 'components/FavoritesOverview/FavoritesOverview.component';
+import MenuLayout from 'components/MenuLayout/MenuLayout.component';
 
 const FavoritesPage = () => {
   return (
-    <Row>
-      <Container>
-        <Row>
-          <Col span={24}>
-            <h1>Избранное</h1>
-          </Col>
-        </Row>
-        <FavoritesOverview />
-      </Container>
-    </Row>
+    <MenuLayout>
+      <Row>
+        <Container>
+          <Row>
+            <Col span={24}>
+              <h1>Избранное</h1>
+            </Col>
+          </Row>
+          <FavoritesOverview />
+        </Container>
+      </Row>
+    </MenuLayout>
   );
 };
 

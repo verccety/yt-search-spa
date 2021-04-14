@@ -22,15 +22,15 @@ function App() {
           <Route exact path='/sign-in'>
             {auth ? <Redirect to='/search' /> : <SignIn />}
           </Route>
-          <MenuLayout>
-            <PrivateRoute exact path='/search'>
-              <SearchPage />
-            </PrivateRoute>
 
-            <PrivateRoute exact path='/favorites'>
-              <FavoritesPage />
-            </PrivateRoute>
-          </MenuLayout>
+          <PrivateRoute exact path='/search'>
+            <SearchPage />
+          </PrivateRoute>
+
+          <PrivateRoute exact path='/favorites'>
+            <FavoritesPage />
+          </PrivateRoute>
+
           <Route path='/'>{auth ? <Redirect to='/search' /> : <Redirect to='/sign-in' />}</Route>
         </Switch>
       </div>
