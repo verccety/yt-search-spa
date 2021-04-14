@@ -1,5 +1,4 @@
 import { Col, Row, Typography } from 'antd';
-import FavoritesModal from 'components/FavoritesModal/FavoritesModal.component';
 import SearchInput from 'components/SearchInput/SearchInput.component';
 import VideoItem from 'components/VideoItem/VideoItem.component';
 import React, { useEffect, useState, useRef } from 'react';
@@ -42,10 +41,11 @@ const VideosOverview = () => {
   const queryName = useSelector(selectQueryName);
   const videoList = useSelector(selectVideoList);
 
+  // кол-во сохр. записей на начало => для своевременного показа popover
   const numFavorites = useRef(userFavorites.length);
   const [isPopoverVisible, setIsPopoverVisible] = useState(false);
   const [fetchedVideos, setFetchedVideos] = useState(null);
-  // possible values: 'vertical | grid'
+  // возм. значения: 'vertical | grid'
   const [viewMode, setViewMode] = useState('vertical');
 
   const handleSaveFavorite = () => {
@@ -131,7 +131,6 @@ const VideosOverview = () => {
             ))}
         </Row>
       </Container>
-      <FavoritesModal />
     </Row>
   );
 };

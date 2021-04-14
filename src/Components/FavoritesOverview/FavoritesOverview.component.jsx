@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeFavorite, selectCurrentFavorites } from 'redux/user/userSlice';
 import { FavoriteContainer } from './FavoritesOverview.styles';
 import { setIsModalVisible } from 'redux/modal/modalSlice';
-import FavoritesModal from 'components/FavoritesModal/FavoritesModal.component';
 import { setInitialValues } from 'redux/form/formSlice';
 
 const { Text } = Typography;
@@ -39,7 +38,6 @@ const FavoritesOverview = () => {
                 </Text>
               </Space>
             </Col>
-            <FavoritesModal />
           </FavoriteContainer>
         ))}
     </>
