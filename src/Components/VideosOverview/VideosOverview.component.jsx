@@ -1,27 +1,49 @@
 import { Col, Row, Typography } from 'antd';
+import FavoritesModal from 'components/FavoritesModal/FavoritesModal.component';
 import SearchInput from 'components/SearchInput/SearchInput.component';
 import VideoItem from 'components/VideoItem/VideoItem.component';
-import React, { useEffect, useState } from 'react';
-import FavoritesModal from 'components/FavoritesModal/FavoritesModal.component';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectSearchQuery } from 'redux/search/searchSlice';
-import { setIsModalVisible } from 'redux/modal/modalSlice';
+import { Link } from 'react-router-dom';
 import { setInitialValues } from 'redux/form/formSlice';
+import { setIsModalVisible } from 'redux/modal/modalSlice';
+import {
+  selectQueryName,
+  selectSearchQuery,
+  selectVideoList,
+  setVideoList,
+} from 'redux/search/searchSlice';
+import { selectCurrentFavorites } from 'redux/user/userSlice';
 import { fetchData } from 'utils/fetchData';
 import {
   Container,
   FavoriteIcon,
   GridIcon,
   InputContainer,
+  PopoverStyled,
+  StyledPopoverContent,
+  TextVideoOnRequest,
   VerticalIcon,
   ViewMode,
 } from './VideosOverview.styles';
 
+const { Text } = Typography;
+const content = (
+  <StyledPopoverContent>
+    <span>Поиск сохранён в разделе «Избранное»</span>
+    <Link to='/favorites'>Перейти в избранное</Link>
+  </StyledPopoverContent>
+);
+
 const VideosOverview = () => {
   const dispatch = useDispatch();
-  const { Text } = Typography;
+  const userFavorites = useSelector(selectCurrentFavorites);
   const searchQuery = useSelector(selectSearchQuery);
+  const queryName = useSelector(selectQueryName);
+  const videoList = useSelector(selectVideoList);
 
+  const numFavorites = useRef(userFavorites.length);
+  const [isPopoverVisible, setIsPopoverVisible] = useState(false);
   const [fetchedVideos, setFetchedVideos] = useState(null);
   // possible values: 'vertical | grid'
   const [viewMode, setViewMode] = useState('vertical');
@@ -39,12 +61,24 @@ const VideosOverview = () => {
   };
 
   useEffect(() => {
-    fetchData().then((res) => setFetchedVideos(res));
-    // ? изменить потом dependency array
-    return () => {
-      console.log('******************* UNMOUNTED');
-    };
-  }, []);
+    if (queryName === searchQuery) {
+      setFetchedVideos(videoList);
+      return;
+    }
+    fetchData().then((res) => {
+      dispatch(setVideoList(res));
+    });
+  }, [searchQuery, queryName, videoList, dispatch]);
+
+  useEffect(() => {
+    if (userFavorites.length <= numFavorites.current) return;
+
+    setIsPopoverVisible(true);
+    setTimeout(() => {
+      setIsPopoverVisible(false);
+    }, 10000);
+  }, [userFavorites, numFavorites]);
+
   return (
     <Row>
       <Container>
@@ -54,15 +88,26 @@ const VideosOverview = () => {
           </Col>
         </Row>
         <InputContainer>
-          <SearchInput suffix={<FavoriteIcon onClick={handleSaveFavorite} />} />
+          <SearchInput
+            suffix={
+              <PopoverStyled
+                content={content}
+                trigger='click'
+                visible={isPopoverVisible}
+                placement='bottom'
+              >
+                <FavoriteIcon onClick={handleSaveFavorite} />
+              </PopoverStyled>
+            }
+          />
         </InputContainer>
 
         <Row style={{ marginBottom: '2rem' }}>
           <Col span={12}>
-            <Text>
-              Видео по запросу <Text strong>{searchQuery}</Text> |{' '}
+            <TextVideoOnRequest>
+              Видео по запросу <Text strong>«{searchQuery}»</Text> |{' '}
               <Text type='secondary'>{fetchedVideos?.pageInfo?.totalResults ?? ''}</Text>
-            </Text>
+            </TextVideoOnRequest>
           </Col>
 
           <ViewMode span={12}>

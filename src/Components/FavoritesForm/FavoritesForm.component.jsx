@@ -32,7 +32,6 @@ const FavoritesForm = ({ currentLocation }) => {
     form
       .validateFields()
       .then((values) => {
-        console.log(values);
         currentLocation.startsWith('/search')
           ? dispatch(addFavorite({ favoriteObj: values }))
           : dispatch(editFavorite({ favoriteObj: values, id: initialValues.id }));
