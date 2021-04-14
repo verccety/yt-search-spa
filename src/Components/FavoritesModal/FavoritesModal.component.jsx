@@ -11,7 +11,7 @@ const FavoritesModal = () => {
 
   return (
     <StyledModal
-      title={currentLocation === '/search' ? 'Сохранить запрос' : 'Изменить запрос'}
+      title={currentLocation.startsWith('/search') ? 'Сохранить запрос' : 'Изменить запрос'}
       visible={visible}
       closable={false}
       footer={null}

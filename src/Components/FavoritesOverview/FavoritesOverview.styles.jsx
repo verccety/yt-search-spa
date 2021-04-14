@@ -8,7 +8,19 @@ export const FavoriteContainer = styled(Row)`
   transition: all 0.2s;
   cursor: pointer;
 
+  & > div:last-child {
+    transition: all 0.2s;
+
+    visibility: hidden;
+    opacity: 0;
+  }
+
   &:hover {
-    background-color: #f0f0f0;
+    background-color: #f1f1f1;
+
+    & > div:last-child {
+      visibility: visible;
+      opacity: 1;
+    }
   }
 `;

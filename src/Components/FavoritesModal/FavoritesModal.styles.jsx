@@ -3,6 +3,9 @@ import styled from 'styled-components/macro';
 import { Modal } from 'antd';
 
 export const StyledModal = styled(Modal)`
+  animation-duration: 300ms;
+  animation-timing-function: ease-in-out;
+
   & > .ant-modal-content {
     box-shadow: 0px 10px 50px rgba(19, 144, 229, 0.3);
     border-radius: 10px;

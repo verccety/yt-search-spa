@@ -6,6 +6,7 @@ import FavoritesModal from 'components/FavoritesModal/FavoritesModal.component';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectSearchQuery } from 'redux/search/searchSlice';
 import { setIsModalVisible } from 'redux/modal/modalSlice';
+import { setInitialValues } from 'redux/form/formSlice';
 import { fetchData } from 'utils/fetchData';
 import {
   Container,
@@ -25,6 +26,18 @@ const VideosOverview = () => {
   // possible values: 'vertical | grid'
   const [viewMode, setViewMode] = useState('vertical');
 
+  const handleSaveFavorite = () => {
+    dispatch(
+      setInitialValues({
+        ['request']: searchQuery,
+        ['favoriteName']: '',
+        ['maxItems']: 12,
+        ['sortBy']: '',
+      })
+    );
+    dispatch(setIsModalVisible());
+  };
+
   useEffect(() => {
     fetchData().then((res) => setFetchedVideos(res));
     // ? изменить потом dependency array
@@ -41,7 +54,7 @@ const VideosOverview = () => {
           </Col>
         </Row>
         <InputContainer>
-          <SearchInput suffix={<FavoriteIcon onClick={() => dispatch(setIsModalVisible())} />} />
+          <SearchInput suffix={<FavoriteIcon onClick={handleSaveFavorite} />} />
         </InputContainer>
 
         <Row style={{ marginBottom: '2rem' }}>

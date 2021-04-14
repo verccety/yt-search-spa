@@ -1,19 +1,20 @@
 import { Col, Form, Input, InputNumber, Row, Select, Slider } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsModalVisible } from 'redux/modal/modalSlice';
+import { setIsModalVisible, selectIsModalVisible } from 'redux/modal/modalSlice';
 import { selectFormInitialValues } from 'redux/form/formSlice';
-import { addFavorite } from 'redux/user/userSlice';
+import { addFavorite, editFavorite } from 'redux/user/userSlice';
 import { CancelButton, layout, SubmitButton } from './FavoritesForm.styles';
 
-const INITIAL_MAX_ITEMS = 12;
 const { Option } = Select;
+const INITIAL_MAX_ITEMS = 12;
 
 const FavoritesForm = ({ currentLocation }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
   const initialValues = useSelector(selectFormInitialValues);
+  const isModalVisible = useSelector(selectIsModalVisible);
 
   const [inputValue, setInputValue] = useState(INITIAL_MAX_ITEMS);
 
@@ -24,7 +25,6 @@ const FavoritesForm = ({ currentLocation }) => {
   const onReset = () => {
     dispatch(setIsModalVisible());
     form.resetFields();
-    setInputValue(INITIAL_MAX_ITEMS);
   };
 
   const onSubmit = () => {
@@ -32,7 +32,10 @@ const FavoritesForm = ({ currentLocation }) => {
     form
       .validateFields()
       .then((values) => {
-        dispatch(addFavorite({ favoriteObj: values }));
+        console.log(values);
+        currentLocation.startsWith('/search')
+          ? dispatch(addFavorite({ favoriteObj: values }))
+          : dispatch(editFavorite({ favoriteObj: values, id: initialValues.id }));
 
         form.resetFields();
       })
@@ -41,11 +44,21 @@ const FavoritesForm = ({ currentLocation }) => {
       });
   };
 
+  // синхронизируем поле ввода с текущим знач. из store
+  useEffect(() => {
+    if (isModalVisible) form.resetFields();
+  }, [isModalVisible, form]);
+
+  // синхронизируем знач. слайдера
   useEffect(() => {
     form.setFieldsValue({
       ['maxItems']: inputValue,
     });
   }, [inputValue, form]);
+
+  useEffect(() => {
+    if (isModalVisible) setInputValue(initialValues.maxItems);
+  }, [initialValues, isModalVisible]);
 
   return (
     <Form
@@ -58,7 +71,7 @@ const FavoritesForm = ({ currentLocation }) => {
       {...layout}
     >
       <Form.Item name='request' label='Запрос'>
-        <Input disabled={currentLocation === '/search' ? true : false} />
+        <Input disabled={currentLocation.startsWith('/search') ? true : false} />
       </Form.Item>
 
       <Form.Item
@@ -111,12 +124,12 @@ const FavoritesForm = ({ currentLocation }) => {
       <Row justify='center'>
         <Form.Item>
           <CancelButton htmlType='button' onClick={onReset}>
-            {currentLocation === '/search' ? 'Не сохранять' : 'Не изменять'}
+            {currentLocation.startsWith('/search') ? 'Не сохранять' : 'Не изменять'}
           </CancelButton>
         </Form.Item>
         <Form.Item>
           <SubmitButton type='primary' htmlType='submit'>
-            {currentLocation === '/search' ? 'Сохранить' : 'Изменить'}
+            {currentLocation.startsWith('/search') ? 'Сохранить' : 'Изменить'}
           </SubmitButton>
         </Form.Item>
       </Row>
