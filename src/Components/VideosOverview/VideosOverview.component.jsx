@@ -1,4 +1,4 @@
-import { Col, Row, Typography } from 'antd';
+import { Col, Row, Typography, Skeleton } from 'antd';
 import SearchInput from 'components/SearchInput/SearchInput.component';
 import VideoItem from 'components/VideoItem/VideoItem.component';
 import React, { useEffect, useState, useRef } from 'react';
@@ -6,12 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setInitialValues } from 'redux/form/formSlice';
 import { setIsModalVisible } from 'redux/modal/modalSlice';
-import {
-  selectQueryName,
-  selectSearchQuery,
-  selectVideoList,
-  fetchVideosByQuery,
-} from 'redux/search/searchSlice';
+import { selectQueryName, selectVideoList, fetchVideosByQuery } from 'redux/search/searchSlice';
 import { selectCurrentFavorites } from 'redux/user/userSlice';
 import {
   Container,
@@ -23,6 +18,7 @@ import {
   TextVideoOnRequest,
   VerticalIcon,
   ViewMode,
+  StyledTitle,
 } from './VideosOverview.styles';
 
 const { Text } = Typography;
@@ -36,15 +32,16 @@ const content = (
 const VideosOverview = () => {
   const dispatch = useDispatch();
   const userFavorites = useSelector(selectCurrentFavorites);
-  const searchQuery = useSelector(selectSearchQuery);
   const queryName = useSelector(selectQueryName);
   const videoList = useSelector(selectVideoList);
+  const isLoading = useSelector((state) => state.search.status);
+  const { searchQuery, order, maxResults } = useSelector((state) => state.search);
 
   // кол-во сохр. записей на начало => для своевременного показа popover
-  const numFavorites = useRef(userFavorites.length);
+  const numFavorites = useRef(userFavorites?.length || 0);
   const [isPopoverVisible, setIsPopoverVisible] = useState(false);
   const [fetchedVideos, setFetchedVideos] = useState(null);
-  // возм. значения: 'vertical | grid'
+  // значения: 'vertical | grid'
   const [viewMode, setViewMode] = useState('vertical');
 
   const handleSaveFavorite = () => {
@@ -65,14 +62,14 @@ const VideosOverview = () => {
       return;
     }
 
-    dispatch(fetchVideosByQuery({ searchQuery }));
-    // fetchData().then((res) => {
-    //   dispatch(setVideoList(res));
-    // });
-  }, [searchQuery, queryName, videoList, dispatch]);
+    dispatch(fetchVideosByQuery({ searchQuery, sortBy: order, maxResults }));
+
+    // eslint-disable-next-line
+  }, [searchQuery, queryName, videoList, order, maxResults]);
 
   useEffect(() => {
-    if (userFavorites.length <= numFavorites.current) return;
+    if (userFavorites?.length === undefined) return;
+    if (userFavorites?.length <= numFavorites.current) return;
 
     setIsPopoverVisible(true);
     setTimeout(() => {
@@ -85,7 +82,7 @@ const VideosOverview = () => {
       <Container>
         <Row>
           <Col span={24}>
-            <h1>Поиск видео</h1>
+            <StyledTitle>Поиск видео</StyledTitle>
           </Col>
         </Row>
         <InputContainer>
@@ -107,7 +104,11 @@ const VideosOverview = () => {
           <Col span={12}>
             <TextVideoOnRequest>
               Видео по запросу <Text strong>«{searchQuery}»</Text> |{' '}
-              <Text type='secondary'>{fetchedVideos?.pageInfo?.totalResults ?? ''}</Text>
+              {isLoading === 'loading' ? (
+                <Skeleton.Button size={'small'} active />
+              ) : (
+                <Text type='secondary'>{fetchedVideos?.pageInfo?.totalResults ?? ''}</Text>
+              )}
             </TextVideoOnRequest>
           </Col>
 
@@ -116,21 +117,24 @@ const VideosOverview = () => {
             <GridIcon onClick={() => setViewMode('grid')} $viewMode={viewMode} />
           </ViewMode>
         </Row>
-
-        <Row gutter={[24, 16]}>
-          {fetchedVideos?.items &&
-            fetchedVideos.items.map((v) => (
-              <Col span={viewMode === 'grid' ? 6 : 24} key={v.id.videoId}>
-                <VideoItem
-                  videoThumbnail={v.snippet.thumbnails.medium.url}
-                  videoName={v.snippet.title}
-                  channelName={v.snippet.channelTitle}
-                  videoCount={v.statistics.viewCount}
-                  viewMode={viewMode}
-                />
-              </Col>
-            ))}
-        </Row>
+        {isLoading === 'loading' ? (
+          <Skeleton active />
+        ) : (
+          <Row gutter={[24, 16]}>
+            {fetchedVideos?.items &&
+              fetchedVideos.items.map((v) => (
+                <Col span={viewMode === 'grid' ? 6 : 24} key={v.id.videoId}>
+                  <VideoItem
+                    videoThumbnail={v.snippet.thumbnails.medium.url}
+                    videoName={v.snippet.title}
+                    channelName={v.snippet.channelTitle}
+                    videoCount={v.statistics?.viewCount}
+                    viewMode={viewMode}
+                  />
+                </Col>
+              ))}
+          </Row>
+        )}
       </Container>
     </Row>
   );

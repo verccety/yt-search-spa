@@ -10,6 +10,7 @@ export const Container = styled(Col).attrs((props) => ({
 }))`
   display: grid;
   grid-template-columns: 100%;
+  grid-template-rows: 4rem;
   padding: 0 5rem;
   justify-content: center;
   max-width: 100rem;
@@ -96,4 +97,10 @@ export const PopoverStyled = styled(myPopover)`
     border-radius: 5px;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
   }
+`;
+
+export const StyledTitle = styled.h2`
+  font-size: 28px;
+  line-height: 40px;
+  font-weight: 400;
 `;
