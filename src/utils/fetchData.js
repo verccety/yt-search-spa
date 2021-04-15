@@ -1,17 +1,17 @@
 import axios from 'axios';
-const API_KEY = 'APITESTSTRING';
+
+const API_KEY = 'PASTE_YOUR_API';
+// ! API СМЕНИТЬ
 
 const API = axios.create({
-  baseURL: 'http://localhost:3004/',
+  baseURL: 'https://www.googleapis.com/youtube/v3/',
   responseType: 'json',
 });
 
-//https://www.googleapis.com/youtube/v3/
-
-export const fetchData = async ({ sortBy = 'relevance', searchQuery, maxResults = '12' }) => {
+export const fetchData = async ({ sortBy, searchQuery, maxResults = '12' }) => {
   try {
     const searchResult = await API(
-      `search?part=snippet&maxResults=${maxResults}&q=${searchQuery}&key=${API_KEY}&order=${sortBy}`
+      `search?type=video&part=snippet&maxResults=${maxResults}&q=${searchQuery}&key=${API_KEY}&order=${sortBy}`
     );
     const videoIds = searchResult.data.items.map((item) => item.id.videoId).toString();
     const statisticsResult = await API(`videos?id=${videoIds}&part=statistics&key=${API_KEY}`);
@@ -27,7 +27,16 @@ export const fetchData = async ({ sortBy = 'relevance', searchQuery, maxResults 
     });
 
     return searchResult.data;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    if (error.response) {
+      // Request made and server responded
+      throw error.response.data;
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.log(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error', error.message);
+    }
   }
 };
