@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import { css } from 'styled-components';
-import { Button } from 'antd';
+import { Button, Form } from 'antd';
 
 const buttonStyles = css`
   width: 210px;
@@ -16,7 +16,7 @@ export const layout = {
     span: 12,
   },
   wrapperCol: {
-    span: 21,
+    span: 24,
   },
 };
 
@@ -36,4 +36,16 @@ export const SubmitButton = styled(Button)`
   background: #1390e5;
   border-radius: 5px;
   color: #fff;
+`;
+export const StyledInput = styled(Form.Item)`
+  width: 100%;
+
+  > div:first-child {
+    padding: 0;
+  }
+
+  > div:last-child > div > div > input {
+    height: 40px;
+    font-size: 2rem;
+  }
 `;

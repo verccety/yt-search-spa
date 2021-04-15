@@ -5,13 +5,13 @@ class ErrorBoundary extends Component {
     hasErrored: false,
   };
   // thrown error if any thrown in children
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError() {
     return {
       hasErrored: true,
     };
   }
 
-  componentDidCatch(error, info) {}
+  componentDidCatch() {}
   render() {
     return (
       <div>

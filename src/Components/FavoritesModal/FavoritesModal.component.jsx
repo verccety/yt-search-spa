@@ -1,4 +1,3 @@
-import { Modal } from 'antd';
 import FavoritesForm from 'components/FavoritesForm/FavoritesForm.component';
 import { useSelector } from 'react-redux';
 import { selectIsModalVisible } from 'redux/modal/modalSlice';
@@ -16,6 +15,7 @@ const FavoritesModal = () => {
       closable={false}
       footer={null}
       maskClosable={false}
+      centered={true}
     >
       <FavoritesForm currentLocation={currentLocation} />
     </StyledModal>

@@ -1,10 +1,13 @@
 import { Col, Row } from 'antd';
 import logo from 'assets/logo.svg';
 import LoginForm from 'components/LoginForm/LoginForm.component';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, LoginContainer, LogoContainer, StyledHeader } from './SignIn.styles';
 
 const SignIn = () => {
+  useEffect(() => {
+    document.title = 'SPA | Авторизация';
+  }, []);
   return (
     <>
       <Container align='middle' justify='center'>

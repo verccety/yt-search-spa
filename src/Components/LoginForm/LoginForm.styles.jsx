@@ -1,4 +1,4 @@
-import { Button, Form } from 'antd';
+import { Button, Form, Input } from 'antd';
 import styled from 'styled-components/macro';
 
 export const StyledFormItem = styled(Form.Item)`
@@ -23,4 +23,13 @@ export const LoginButton = styled(Button)`
   height: max-content;
   border-radius: 5px;
   font-size: 2rem;
+`;
+
+export const LoginInput = styled(Input)`
+  &&& {
+    height: 40px;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 2.4rem;
+  }
 `;

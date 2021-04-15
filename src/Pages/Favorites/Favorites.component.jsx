@@ -1,10 +1,13 @@
 import { Col, Row } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container } from './Favorites.styles';
 import FavoritesOverview from 'components/FavoritesOverview/FavoritesOverview.component';
 import MenuLayout from 'components/MenuLayout/MenuLayout.component';
 
 const FavoritesPage = () => {
+  useEffect(() => {
+    document.title = 'SPA | Избранное';
+  }, []);
   return (
     <MenuLayout>
       <Row>

@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { selectSearchQuery, setSearchQuery } from 'redux/search/searchSlice';
+import { selectSearchQuery, setSearchParams } from 'redux/search/searchSlice';
 import { StyledSearch } from './SearchInput.styles';
 
 const SearchInput = ({ ...props }) => {
   const dispatch = useDispatch();
-  const onSearch = (value) => dispatch(setSearchQuery(value));
+  const onSearch = (value) => dispatch(setSearchParams({ searchQuery: value }));
   const isLoading = useSelector((state) => state.search.status);
   const searchQuery = useSelector(selectSearchQuery);
-  console.log('isloading: ', isLoading);
 
   return (
     <StyledSearch

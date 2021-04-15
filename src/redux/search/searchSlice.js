@@ -6,23 +6,37 @@ const initialState = {
   searchQuery: null,
   order: 'relevance',
   maxResults: 12,
+  error: null,
   fetchedVideos: {
     queryName: null,
     videoList: {},
   },
 };
 
-export const fetchVideosByQuery = createAsyncThunk('search/fetchVideos', async ({ ...query }) => {
-  const response = await fetchData({ ...query });
-  return response;
-});
+export const fetchVideosByQuery = createAsyncThunk(
+  'search/fetchVideos',
+  async ({ ...query }, { rejectWithValue }) => {
+    try {
+      const response = await fetchData({ ...query });
+      return response;
+    } catch (err) {
+      let error = err; // cast the error for access
+      if (!error.error) {
+        throw err;
+      }
+      return rejectWithValue(err.error.message);
+    }
+  }
+);
 
 const searchSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {
-    setSearchQuery(state, action) {
-      state.searchQuery = action.payload;
+    setSearchParams(state, { payload: { searchQuery, sortBy, maxItems } }) {
+      state.searchQuery = searchQuery;
+      state.maxResults = maxItems || 12;
+      state.order = sortBy || 'relevance';
     },
   },
   extraReducers: {
@@ -34,10 +48,18 @@ const searchSlice = createSlice({
       state.fetchedVideos.videoList = action.payload;
       state.fetchedVideos.queryName = state.searchQuery;
     },
+    [fetchVideosByQuery.rejected]: (state, action) => {
+      state.status = 'idle';
+      if (action.payload) {
+        state.error = action.payload;
+      } else {
+        state.error = action.error.message;
+      }
+    },
   },
 });
 
-export const { setSearchQuery, setVideoList } = searchSlice.actions;
+export const { setSearchParams } = searchSlice.actions;
 
 export default searchSlice.reducer;
 

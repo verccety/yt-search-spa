@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 import { Col } from 'antd';
 
-export const Container = styled(Col).attrs((props) => ({
+export const Container = styled(Col).attrs(() => ({
   span: 24,
 }))`
   display: grid;

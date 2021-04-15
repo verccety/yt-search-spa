@@ -2,7 +2,7 @@ import { Context } from 'App.js';
 import React, { useContext } from 'react';
 import { StyledButton } from './SignoutButton.styles';
 import { setCurrentUser } from 'redux/user/userSlice';
-import { setSearchQuery } from 'redux/search/searchSlice';
+import { setSearchParams } from 'redux/search/searchSlice';
 import { useDispatch } from 'react-redux';
 
 const SignoutButton = () => {
@@ -14,7 +14,7 @@ const SignoutButton = () => {
     setAuth(null);
 
     dispatch(setCurrentUser(null));
-    dispatch(setSearchQuery(null));
+    dispatch(setSearchParams({ searchQuery: null }));
   };
   return (
     <StyledButton onClick={signOut} type='link' size='large'>

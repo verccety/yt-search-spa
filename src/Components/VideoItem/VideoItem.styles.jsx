@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import { css } from 'styled-components';
-import { Row, Typography } from 'antd';
+import { Row } from 'antd';
 
 const cellStyle = css`
   grid-template-rows: auto;
@@ -33,8 +33,10 @@ export const ImgContainer = styled.img`
 `;
 
 export const DescriptionContainer = styled(Row)`
-  display: grid;
-  grid-template-rows: 1fr auto auto;
+  display: flex;
+  flex-direction: column;
+  max-height: 13rem;
+  justify-content: space-around;
 
   span {
     line-height: 1.1;
@@ -43,8 +45,15 @@ export const DescriptionContainer = styled(Row)`
 
 export const StyledTitle = styled.span`
   font-family: 'Roboto', sans-serif;
-  font-size: 14px;
+  font-size: ${({ $viewMode }) => ($viewMode === 'vertical' ? '16px' : '14px')};
   font-style: normal;
   font-weight: 500;
   line-height: 16px;
+  margin-bottom: 2rem;
+  height: 3rem;
+`;
+
+export const StatsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;

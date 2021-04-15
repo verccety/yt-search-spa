@@ -4,7 +4,7 @@ import { AppstoreOutlined, BarsOutlined, HeartOutlined } from '@ant-design/icons
 
 const { Text } = Typography;
 
-export const Container = styled(Col).attrs((props) => ({
+export const Container = styled(Col).attrs(() => ({
   span: 24,
   justify: 'center',
 }))`

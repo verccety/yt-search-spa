@@ -8,7 +8,7 @@ export const Container = styled(Row)`
   place-content: center;
 `;
 
-export const SearchContainer = styled(Row).attrs((props) => ({
+export const SearchContainer = styled(Row).attrs(() => ({
   justify: 'center',
 }))`
   font-size: 2.6rem;

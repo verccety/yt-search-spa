@@ -11,10 +11,8 @@
     "react/jsx-pascal-case": 1,
     "react/prop-types": 0,
     "react/react-in-jsx-scope": 0,
-    "no-unused-vars": 0,
-    "import/no-unresolved": 0,
-    "no-debugger": 0
-
+    "no-unused-vars": 2,
+    "import/no-unresolved": 0
   },
   "plugins": ["react", "import", "jsx-a11y"],
   "parserOptions": {

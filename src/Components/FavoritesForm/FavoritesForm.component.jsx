@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setIsModalVisible, selectIsModalVisible } from 'redux/modal/modalSlice';
 import { selectFormInitialValues } from 'redux/form/formSlice';
 import { addFavorite, editFavorite } from 'redux/user/userSlice';
-import { CancelButton, layout, SubmitButton } from './FavoritesForm.styles';
+import { CancelButton, layout, SubmitButton, StyledInput } from './FavoritesForm.styles';
 
 const { Option } = Select;
 const INITIAL_MAX_ITEMS = 12;
@@ -63,17 +63,16 @@ const FavoritesForm = ({ currentLocation }) => {
     <Form
       name='favorites-form'
       layout='vertical'
-      size='large'
       onFinish={onSubmit}
       initialValues={initialValues}
       form={form}
       {...layout}
     >
-      <Form.Item name='request' label='Запрос'>
+      <StyledInput name='request' label='Запрос'>
         <Input disabled={currentLocation.startsWith('/search')} />
-      </Form.Item>
+      </StyledInput>
 
-      <Form.Item
+      <StyledInput
         name='favoriteName'
         label='Название'
         rules={[
@@ -84,22 +83,22 @@ const FavoritesForm = ({ currentLocation }) => {
         ]}
       >
         <Input />
-      </Form.Item>
+      </StyledInput>
 
-      <Form.Item name='sortBy' label='Сортировать по'>
+      <StyledInput name='sortBy' label='Сортировать по'>
         <Select>
           <Option value=''>Без сортировки</Option>
           <Option value='relevance'>По релевантности</Option>
           <Option value='date'>По времени</Option>
           <Option value='rating'>По рейтингу</Option>
           <Option value='title'>По названию</Option>
-          <Option value='videoCount'>По просмотрам</Option>
+          <Option value='viewCount'>По просмотрам</Option>
         </Select>
-      </Form.Item>
+      </StyledInput>
 
       <Form.Item name='maxItems' label='Максимальное количество'>
         <Row>
-          <Col span={20}>
+          <Col span={18}>
             <Slider
               min={1}
               max={50}
@@ -108,7 +107,7 @@ const FavoritesForm = ({ currentLocation }) => {
             />
           </Col>
 
-          <Col span={4}>
+          <Col span={6}>
             <InputNumber
               min={1}
               max={50}
@@ -120,7 +119,7 @@ const FavoritesForm = ({ currentLocation }) => {
         </Row>
       </Form.Item>
 
-      <Row justify='center'>
+      <Row justify='center' style={{ height: '5.5rem' }}>
         <Form.Item>
           <CancelButton htmlType='button' onClick={onReset}>
             {currentLocation.startsWith('/search') ? 'Не сохранять' : 'Не изменять'}

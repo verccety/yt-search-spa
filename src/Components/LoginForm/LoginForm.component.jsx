@@ -3,7 +3,7 @@ import { Context } from 'App.js';
 import React, { useContext } from 'react';
 import generateToken from 'utils/tokenGenerator';
 import verifyUser from 'utils/verifyUser';
-import { LoginButton, StyledFormItem } from './LoginForm.styles';
+import { LoginInput, LoginButton, StyledFormItem } from './LoginForm.styles';
 import { useDispatch } from 'react-redux';
 import { setCurrentUser } from 'redux/user/userSlice';
 
@@ -47,7 +47,7 @@ const LoginForm = () => {
             },
           ]}
         >
-          <Input disabled={false} />
+          <LoginInput disabled={false} />
         </StyledFormItem>
 
         <StyledFormItem

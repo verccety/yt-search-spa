@@ -62,7 +62,11 @@ const VideosOverview = () => {
       return;
     }
 
-    dispatch(fetchVideosByQuery({ searchQuery, sortBy: order, maxResults }));
+    const promise = dispatch(fetchVideosByQuery({ searchQuery, sortBy: order, maxResults }));
+
+    return () => {
+      promise.abort();
+    };
 
     // eslint-disable-next-line
   }, [searchQuery, queryName, videoList, order, maxResults]);
