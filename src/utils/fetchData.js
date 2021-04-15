@@ -1,4 +1,5 @@
 import axios from 'axios';
+const API_KEY = 'APITESTSTRING';
 
 const API = axios.create({
   baseURL: 'http://localhost:3004/',
@@ -7,15 +8,13 @@ const API = axios.create({
 
 //https://www.googleapis.com/youtube/v3/
 
-//search?part=snippet&maxResults=12&q=${searchQuery}&key=${API_KEY}
-
-//videos?id=${videoIds}&part=statistics&key=${API_KEY}
-
-export const fetchData = async () => {
+export const fetchData = async ({ sortBy = 'relevance', searchQuery, maxResults = '12' }) => {
   try {
-    const searchResult = await API(`search`);
+    const searchResult = await API(
+      `search?part=snippet&maxResults=${maxResults}&q=${searchQuery}&key=${API_KEY}&order=${sortBy}`
+    );
     const videoIds = searchResult.data.items.map((item) => item.id.videoId).toString();
-    const statisticsResult = await API(`videos`);
+    const statisticsResult = await API(`videos?id=${videoIds}&part=statistics&key=${API_KEY}`);
 
     // Для удобного merge статистики с объектом со списком видео
     const statisticsResultObj = {};

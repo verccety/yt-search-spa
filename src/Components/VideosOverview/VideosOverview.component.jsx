@@ -10,10 +10,9 @@ import {
   selectQueryName,
   selectSearchQuery,
   selectVideoList,
-  setVideoList,
+  fetchVideosByQuery,
 } from 'redux/search/searchSlice';
 import { selectCurrentFavorites } from 'redux/user/userSlice';
-import { fetchData } from 'utils/fetchData';
 import {
   Container,
   FavoriteIcon,
@@ -65,9 +64,11 @@ const VideosOverview = () => {
       setFetchedVideos(videoList);
       return;
     }
-    fetchData().then((res) => {
-      dispatch(setVideoList(res));
-    });
+
+    dispatch(fetchVideosByQuery({ searchQuery }));
+    // fetchData().then((res) => {
+    //   dispatch(setVideoList(res));
+    // });
   }, [searchQuery, queryName, videoList, dispatch]);
 
   useEffect(() => {

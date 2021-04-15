@@ -2,8 +2,6 @@ import styled from 'styled-components/macro';
 import { css } from 'styled-components';
 import { Row, Typography } from 'antd';
 
-const { Title } = Typography;
-
 const cellStyle = css`
   grid-template-rows: auto;
   grid-template-columns: 20rem 50rem;
@@ -35,13 +33,18 @@ export const ImgContainer = styled.img`
 `;
 
 export const DescriptionContainer = styled(Row)`
-  display: flex;
-  flex-direction: column;
-  padding: 0 0.5rem;
-  line-height: 1.2;
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+
+  span {
+    line-height: 1.1;
+  }
 `;
 
-export const StyledTitle = styled(Title)`
-  font-size: 14px !important;
-  text-overflow: ellipsis;
+export const StyledTitle = styled.span`
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
 `;

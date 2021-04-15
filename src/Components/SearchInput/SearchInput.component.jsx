@@ -1,10 +1,13 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { selectSearchQuery, setSearchQuery } from 'redux/search/searchSlice';
 import { StyledSearch } from './SearchInput.styles';
-import { setSearchQuery } from 'redux/search/searchSlice';
-import { useDispatch } from 'react-redux';
 
 const SearchInput = ({ ...props }) => {
   const dispatch = useDispatch();
   const onSearch = (value) => dispatch(setSearchQuery(value));
+  const isLoading = useSelector((state) => state.search.status);
+  const searchQuery = useSelector(selectSearchQuery);
+  console.log('isloading: ', isLoading);
 
   return (
     <StyledSearch
@@ -12,6 +15,8 @@ const SearchInput = ({ ...props }) => {
       enterButton='Найти'
       size='large'
       onSearch={onSearch}
+      defaultValue={searchQuery}
+      loading={isLoading === 'loading'}
       {...props}
     />
   );

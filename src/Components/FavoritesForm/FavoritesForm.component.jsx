@@ -70,7 +70,7 @@ const FavoritesForm = ({ currentLocation }) => {
       {...layout}
     >
       <Form.Item name='request' label='Запрос'>
-        <Input disabled={currentLocation.startsWith('/search') ? true : false} />
+        <Input disabled={currentLocation.startsWith('/search')} />
       </Form.Item>
 
       <Form.Item
